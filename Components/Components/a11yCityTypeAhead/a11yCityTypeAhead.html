@@ -1,0 +1,11 @@
+﻿<div tabindex="-1" ng-cloak>
+    <div id="{{a11yUid}}" class="a11y-city-type-ahead" aria-label="{{a11yAriaLabel}}" role="application">
+        <div id="{{a11yUid}}-instruction" aria-hidden="true" class="sr-only">Please type minimum 3 letters to get the suggestion list box.</div>
+        <div id="{{a11yUid}}-result" aria-live="polite" aria-relevant="text" class="sr-only"></div>
+        <label id="{{a11yUid}}-label">{{a11yAriaLabel}}</label><span class="pull-left" aria-hidden="true">:</span>
+        <input id="{{a11yUid}}-edit" type="text" aria-owns="{{a11yUid}}-list" aria-describedby="{{a11yUid}}-instruction" aria-expanded="false" aria-labelledby="{{a11yUid}}-label" ng-keydown="textBoxKeyDown($event)" ng-keyup="textBoxKeyUp($event)" ng-blur="textBoxBlur($event)" ng-focus="textBoxFocus($event)">
+        <ul id="{{a11yUid}}-list" tabindex="-1" role="listbox" style="display: none;" ng-focus="listBoxFocus($event)" ng-mousedown="listBoxClick($event)">
+            <li ng-repeat="suggestion in suggestions" id="{{a11yUid}}-item-{{$index}}" role="option"><span ng-bind-html="getHtml(suggestion)"></span></li>
+        </ul>
+    </div>
+</div>

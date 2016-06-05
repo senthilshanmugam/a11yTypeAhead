@@ -1,0 +1,21 @@
+﻿<div tabindex="-1" ng-cloak>
+    <span>{{a11yUid}}</span>
+    <div id="{{a11yUid}}" class="a11y-type-ahead" aria-label="{{a11yAriaLabel}}" role="application" >
+        <label id="{{a11yUid}}-label">{{a11yAriaLabel}}</label><span class="pull-left" aria-hidden="true">:</span>
+        <div id="{{a11yUid}}-instruction" aria-hidden="true" class="sr-only">To change the selection use the arrow keys. Or Press enter key to open the list box, to select item use arrow key and press Enter key</div>
+        <input id="{{a11yUid}}-edit" type="text" aria-owns="{{a11yUid}}-list" aria-describedby="{{a11yUid}}-instruction" aria-expanded="false"
+               aria-labelledby="{{a11yUid}}-label"
+              ng-keydown="textBoxKeyDown($event)" ng-keyup="textBoxKeyUp($event)" ng-keypress="textBoxKeyPress($event)" ng-blur="textBoxBlur($event)"
+               ng-focus="textBoxFocus($event)">
+        <div class="pull-left button" role="button" id="{{a11yUid}}-button" aria-label="{{ariaLabelButton}}" aria-controls="{{a11yUid}}-list"
+             aria-hidden="true" tabindex="-1"
+             ng-mousedown="dropDownClick($event)" ng-mouseup="dropDownMouseUp($event)">
+            <div class="tri"></div>
+        </div>
+        <ul id="{{a11yUid}}-list" tabindex="-1" role="listbox" aria-expanded="false" style="display: none;"
+            ng-focus="listBoxFocus($event)" ng-blur="listBoxBlur($event)" ng-mousedown="listBoxClick($event)">
+            <li id="{{a11yUid}}-none" class="sr-only" style="height:0;padding:0" aria-label="'blank'"></li>
+            <li ng-repeat="x in states" id="ta-item{{$index}}" role="option" data-code="{{x.code}}">{{x.name}}</li>
+        </ul>
+    </div>
+</div>

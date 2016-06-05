@@ -1,0 +1,95 @@
+﻿.datepicker {
+  margin: 10px;
+  padding: 2px;
+  position: absolute;
+  width: 261px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.datepicker #month-wrap {
+  height: 30px;
+  background-color: #ddd;
+  border: 1px solid black;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.datepicker #month-wrap #bn_prev {
+  margin: 3px;
+  float: left;
+  width: 24px;
+  height: 24px;
+}
+.datepicker #month-wrap #bn_next {
+  margin: 3px;
+  float: right;
+  width: 24px;
+  height: 24px;
+}
+.datepicker #month-wrap #bn_prev:hover,
+.datepicker #month-wrap #bn_prev:focus,
+.datepicker #month-wrap #bn_next:hover,
+.datepicker #month-wrap #bn_next:focus {
+  margin: 2px;
+  background-color: #fc3;
+  border: 1px solid #800;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.datepicker #month-wrap .bn_img {
+  margin: 0;
+  padding: 2px;
+}
+.datepicker #month-wrap #month {
+  float: left;
+  padding-top: 6px;
+  width: 199px;
+  height: 24px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.datepicker #cal {
+  width: 261px;
+  font-size: 1.2em;
+  text-align: center;
+}
+.datepicker #cal th,
+.datepicker #cal td {
+  width: 35px;
+  height: 30px;
+  padding: 0;
+}
+.datepicker #cal td {
+  background-color: #ddd;
+  border: 1px solid #999;
+}
+.datepicker #cal td.today {
+  background-color: #FFF0C4;
+  border: 1px solid #999;
+}
+.datepicker #cal td.empty {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+}
+.datepicker #cal td.empty:hover {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+}
+.datepicker #cal td:hover,
+.datepicker #cal td .focus {
+  border-color: #800;
+  background-color: #fc3;
+}
+.offscreen {
+  position: absolute;
+  left: -200em;
+  top: -100em;
+}
+[aria-hidden="true"] {
+  display: none;
+}

@@ -1,0 +1,31 @@
+﻿<form>
+    <label for="firstName">FirstName</label><input type="text" id="firstName" />
+
+    <a11y-city-type-ahead a11y-uid="AsianCountriesList"
+                          a11y-aria-label="Asian Countries List"
+                          on-search="onItemSearchCountries(searchString)"
+                          get-option-template="getOptionTemplate1(suggestion)"
+                          get-option-text="getSelectedItemText1(itemSelected)"
+                          on-select="onItemSelected()"
+                          selected-text="name">
+    </a11y-city-type-ahead>
+
+    <a11y-city-type-ahead a11y-uid="USStatesList"
+                          a11y-aria-label="US States List"
+                          on-search="onItemSearchStates(searchString)"
+                          get-option-template="getOptionTemplate(suggestion)"
+                          get-option-text="getSelectedItemText(itemSelected)"
+                          on-select="onItemSelected()"
+                          selected-text="name">
+    </a11y-city-type-ahead>
+
+    <a11y-city-type-ahead a11y-uid="Zest43"
+                          on-search="onItemSearchStates(searchString)" 
+                          on-select="onItemSelected()"
+                          selected-text="name">
+    </a11y-city-type-ahead>
+
+    <!--<a11y-type-ahead ng-cloak a11y-uid="typeAheadId1" pre-selected="typeAheadId1S" selectedText="name" a11y-aria-label="Country List" on-select="onItemSelected()"></a11y-type-ahead>
+    <a11y-type-ahead a11y-uid="typeAheadId2" pre-selected="typeAheadId2S" selectedText="name" a11y-aria-label="City List" on-select="onItemSelected()"></a11y-type-ahead>
+    <a11y-type-ahead a11y-uid="typeAheadId3" pre-selected="typeAheadId3S" selectedText="name" a11y-aria-label="States List" aria-label-button="List of States" on-select="onItemSelected()"></a11y-type-ahead>-->
+</form>

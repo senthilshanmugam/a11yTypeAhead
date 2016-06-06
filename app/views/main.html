@@ -1,0 +1,53 @@
+<div class="jumbotron hidden">
+  <h1>Accessible Type Ahead</h1>
+  <p class="lead">
+    Angular Type Ahead directive with Accessibility.
+  </p>
+</div>
+
+<div class="row marketing">
+  <h4>HTML</h4>
+  <pre>
+&lt;a11y-type-ahead a11y-uid="AsianCountriesList"
+        a11y-aria-label="Asian Countries List"
+        on-search="onItemSearchCountries(searchString)"
+        get-option-template="getOptionTemplate1(suggestion)"
+        get-option-text="getSelectedItemText1(itemSelected)"
+        on-select="onItemSelected()"
+        selected-text="name" //>
+  </pre>
+
+  <h4>Angular</h4>
+  <p>
+    AngularJS is a toolset for building the framework most suited to your application development.
+  </p>
+
+  <h4>Karma</h4>
+  <p>Spectacular Test Runner for JavaScript.</p>
+</div>
+
+<form ng-controller="a11yTypeAheadController" autocomplete="off">
+    <a11y-type-ahead a11y-uid="AsianCountriesList"
+                          a11y-aria-label="Asian Countries List"
+                          search-treshold="2"
+                          on-search="onItemSearchCountries(searchString)"
+                          get-option-template="getOptionTemplate1(suggestion)"
+                          get-option-text="getSelectedItemText1(itemSelected)"
+                          on-select="onItemSelected()"
+                          selected-text="name" />
+    <a11y-type-ahead a11y-uid="USStatesList"
+                          a11y-aria-label="US States List"
+                          on-search="onItemSearchStates(searchString)"
+                          get-option-template="getOptionTemplate(suggestion)"
+                          get-option-text="getSelectedItemText(itemSelected)"
+                          on-select="onItemSelected()"
+                          selected-text="name">
+    </a11y-type-ahead>
+
+    <a11y-type-ahead a11y-uid="USCites"
+                          search-treshold="1"
+                          on-search="onItemSearchCities(searchString)"
+                          on-select="onItemSelected()"
+                          selected-text="name">
+    </a11y-type-ahead>
+</form>

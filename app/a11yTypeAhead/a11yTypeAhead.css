@@ -1,17 +1,17 @@
-﻿.a11y-city-type-ahead {
+﻿.a11y-type-ahead {
   margin: 20px;
   padding: 0;
   height: 24px;
   display: block;
   overflow: visible;
 }
-.a11y-city-type-ahead label {
+.a11y-type-ahead label {
   margin: 0;
   padding: 2px;
   font-weight: bold;
   float: left;
 }
-.a11y-city-type-ahead input[type='text'] {
+.a11y-type-ahead input[type='text'] {
   margin: 0;
   padding: 2px 3px;
   width: 240px;
@@ -20,7 +20,7 @@
   font-size: 1em;
   float: left;
 }
-.a11y-city-type-ahead ul {
+.a11y-type-ahead ul {
   padding: 0;
   margin: 0;
   clear: both;
@@ -32,11 +32,11 @@
   position: relative;
   border-top: 0;
 }
-.a11y-city-type-ahead ul li {
+.a11y-type-ahead ul li {
   margin: 0 1px 0 0;
   padding: 2px 5px;
 }
-.a11y-city-type-ahead ul li:hover {
+.a11y-type-ahead ul li:hover {
   border-top: 1px solid #0072c6;
   border-bottom: 1px solid #0072c6;
   padding: 1px 5px;
@@ -44,7 +44,7 @@
   color: #fff;
   cursor: pointer;
 }
-.a11y-city-type-ahead .selected {
+.a11y-type-ahead .selected {
   border-top: 1px solid #0072c6;
   border-bottom: 1px solid #0072c6;
   padding: 1px 5px;

@@ -14,7 +14,7 @@
         get-option-template="getOptionTemplate1(suggestion)"
         get-option-text="getSelectedItemText1(itemSelected)"
         on-select="onItemSelected()"
-        selected-text="name" //>
+        selected-text="name" /&gt;
   </pre>
 
   <h4>Angular</h4>
@@ -28,26 +28,25 @@
 
 <form ng-controller="a11yTypeAheadController" autocomplete="off">
     <a11y-type-ahead a11y-uid="AsianCountriesList"
-                          a11y-aria-label="Asian Countries List"
-                          search-treshold="2"
-                          on-search="onItemSearchCountries(searchString)"
-                          get-option-template="getOptionTemplate1(suggestion)"
-                          get-option-text="getSelectedItemText1(itemSelected)"
-                          on-select="onItemSelected()"
-                          selected-text="name" />
+                     a11y-aria-label="Asian Countries List"
+                     search-treshold="2"
+                     on-search="onItemSearchCountries(searchString)"
+                     get-option-template="getOptionTemplate1(suggestion)"
+                     get-option-text="getSelectedItemText1(itemSelected)"
+                     on-select="onItemSelected()"
+                     selected-text="name" ></a11y-type-ahead>
+
     <a11y-type-ahead a11y-uid="USStatesList"
-                          a11y-aria-label="US States List"
-                          on-search="onItemSearchStates(searchString)"
-                          get-option-template="getOptionTemplate(suggestion)"
-                          get-option-text="getSelectedItemText(itemSelected)"
-                          on-select="onItemSelected()"
-                          selected-text="name">
-    </a11y-type-ahead>
+                     a11y-aria-label="US States List"
+                     on-search="onItemSearchStates(searchString)"
+                     get-option-template="getOptionTemplate(suggestion)"
+                     get-option-text="getSelectedItemText(itemSelected)"
+                     on-select="onItemSelected()"
+                     selected-text="name" ></a11y-type-ahead>
 
     <a11y-type-ahead a11y-uid="USCites"
-                          search-treshold="1"
-                          on-search="onItemSearchCities(searchString)"
-                          on-select="onItemSelected()"
-                          selected-text="name">
-    </a11y-type-ahead>
+                     search-treshold="1"
+                     on-search="onItemSearchCities(searchString)"
+                     on-select="onItemSelected()"
+                     selected-text="name" ></a11y-type-ahead>
 </form>

@@ -1,4 +1,5 @@
-﻿a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yCommon', function ($timeout, $sce, $compile, a11yCommon) {
+﻿'use strict';
+a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yCommon', function ($timeout, $sce, $compile, a11yCommon) {
     return {
         restrict: 'E',
         replace: true,
@@ -15,9 +16,9 @@
         },
         templateUrl: 'a11yTypeAhead/a11yTypeAhead.html',
         link: function (scope, element, attr) {
-            keys = a11yCommon.getKeyCodes();
+            var keys = a11yCommon.getKeyCodes();
             scope.suggestions = null;
-            taTimerPromise = null;
+            var taTimerPromise = null;
             scope.searchRequestCounter = 0;
 
             $timeout(function () {
@@ -286,7 +287,7 @@
                     scope.taSelected = itemSelected;
                     scope.selectedText = itemSelected.text();
                     $timeout(function () {
-                        if(scope.isFocus())  scope.onSelect();
+                        if (scope.isFocus()) scope.onSelect();
                     }, 10);
                 }
             }
@@ -372,4 +373,23 @@
         controller: function ($scope, $element) {
         }
     }
+}]);
+
+
+a11yModule.run(['$templateCache', function ($templateCache) {
+    'use strict';
+
+    $templateCache.put('a11yTypeAhead/a11yTypeAhead.html',
+        "<div tabindex=\"-1\" ng-cloak>\r" +
+        "    <div id=\"{{a11yUid}}\" class=\"a11y-type-ahead\" aria-label=\"{{a11yAriaLabel}}\" role=\"application\">\r" +
+        "        <div id=\"{{a11yUid}}-instruction\" aria-hidden=\"true\" class=\"sr-only\">Please type minimum 3 letters to get the suggestion list box.</div>\r" +
+        "        <div id=\"{{a11yUid}}-result\" aria-live=\"polite\" aria-relevant=\"text\" class=\"sr-only\"></div>\r" +
+        "        <label id=\"{{a11yUid}}-label\">{{a11yAriaLabel}}</label><span class=\"pull-left\" aria-hidden=\"true\">:</span>\r" +
+        "        <input id=\"{{a11yUid}}-edit\" type=\"text\" aria-owns=\"{{a11yUid}}-list\" aria-describedby=\"{{a11yUid}}-instruction\" aria-expanded=\"false\" aria-labelledby=\"{{a11yUid}}-label\" ng-keydown=\"textBoxKeyDown($event)\" ng-keyup=\"textBoxKeyUp($event)\" ng-blur=\"textBoxBlur($event)\" ng-focus=\"textBoxFocus($event)\">\r" +
+        "        <ul id=\"{{a11yUid}}-list\" tabindex=\"-1\" role=\"listbox\" style=\"display: none;\" ng-focus=\"listBoxFocus($event)\" ng-mousedown=\"listBoxClick($event)\">\r" +
+        "            <li ng-repeat=\"suggestion in suggestions\" id=\"{{a11yUid}}-item-{{$index}}\" role=\"option\"><span ng-bind-html=\"getHtml(suggestion)\"></span></li>\r" +
+        "        </ul>\r" +
+        "    </div>\r" +
+        "</div>\r"
+    );
 }]);

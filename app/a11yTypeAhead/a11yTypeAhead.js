@@ -22,6 +22,13 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                 $scope.taOptions = $scope.taListBox.find('li');
                 $scope.taSelected = $scope.taOptions.filter('.selected');
                 if (!$scope.config.a11yAriaLabel) $scope.taLabel.text($scope.config.a11yUid + $scope.taLabel.text());
+                if ($scope.config.hideLabel) $scope.taLabel.addClass('sr-only');
+                $scope.taListBox.on('mousewheel DOMMouseScroll', function (e) {
+                    var event = e.originalEvent;
+                    var d = event.wheelDelta || -event.detail;
+                    this.scrollTop += (d < 0 ? 1 : -1) * 30;
+                    e.preventDefault();
+                });
             }, 1);
 
             $scope.textBoxKeyDown = function (Event) {

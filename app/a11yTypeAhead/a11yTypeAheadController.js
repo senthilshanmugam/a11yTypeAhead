@@ -13,7 +13,7 @@
 
         $scope.getOptionTemplate = function (searchString, selectedOption) {
             var xName = selectedOption.name;
-            var regExBold = new RegExp('('+searchString+')(?!<\/strong>)','gi');
+            var regExBold = new RegExp('(' + searchString + ')(?!<\/strong>)', 'gi');
             var subst = '<strong>$1</strong>';
             xName = xName.replace(regExBold, subst);
             return '<div class="custom-type-ahead-option"><div class="data">' + xName + '</div></div>';
@@ -31,6 +31,7 @@
             searchTreshold: 1,
             a11yUid: 'AsianCountriesList',
             a11yAriaLabel: 'Asian Countries List',
+            hideLabel: false,
             onSearch: function (searchString) {
                 var deferred = $q.defer();
                 deferred.resolve(a11yCommon.getFilteredCountries(searchString));
@@ -49,7 +50,7 @@
                 deferred.resolve(a11yCommon.getFilteredStates(searchString));
                 return deferred.promise;
             },
-            getOptionTemplate: function (searchString,selectedOption) { return $scope.getOptionTemplate(searchString,selectedOption); },
+            getOptionTemplate: function (searchString, selectedOption) { return $scope.getOptionTemplate(searchString, selectedOption); },
             getOptionText: function (itemSelected) { return $scope.getSelectedItemText(itemSelected); },
             onSelect: function () { $scope.onItemSelected(); },
         }

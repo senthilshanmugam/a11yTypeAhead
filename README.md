@@ -2,8 +2,20 @@
 
 Accessible Type Ahead directive.
 
-## URL
-http://a11yTypeAhead.azurewebsites.net
+## Demo
+See Live Demo @ <a href="http://a11yTypeAhead.azurewebsites.net">http://a11yTypeAhead.azurewebsites.net</a>
+
+## Usage
+```html
+<a11y-type-ahead a11y-uid="AsianCountriesList"
+        a11y-aria-label="Asian Countries List"
+        on-search="onItemSearchCountries(searchString)"
+        get-option-template="getOptionTemplate1(suggestion)"
+        get-option-text="getSelectedItemText1(itemSelected)"
+        on-select="onItemSelected()"
+        selected-text="name">
+</a11y-type-ahead>
+```
 
 ## a11y-type-ahead
 

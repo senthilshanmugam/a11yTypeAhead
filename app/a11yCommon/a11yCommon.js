@@ -48,7 +48,7 @@ a11yModule.factory('a11yCommon', ['$q', '$timeout', function ($q, $timeout) {
         },
 
         getFilteredCountries: function (searchString) {
-            var testPattern = new RegExp('^' + searchString, 'i');
+            var testPattern = new RegExp( searchString, 'i');
             var filteredAsianCountries = this.AsianCountries.filter(function (item) {
                 return testPattern.test(item.name);
             });

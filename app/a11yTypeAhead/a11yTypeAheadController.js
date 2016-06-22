@@ -1,46 +1,72 @@
 ﻿angular.module('a11yModule')
     .controller('a11yTypeAheadController', ['$scope', '$q', '$timeout', 'a11yCommon', function ($scope, $q, $timeout, a11yCommon) {
 
-    $scope.name = "";
+        $scope.name = "";
 
-    $scope.onItemSelected = function () {
-        console.log($scope.name + " Selected")
-    };
+        $scope.onItemSelected = function () {
+            console.log($scope.name + " Selected")
+        };
 
-    $scope.onItemSearchCountries = function (searchString) {
-        var deferred = $q.defer();
-        deferred.resolve(a11yCommon.getFilteredCountries(searchString));
-        return deferred.promise;
-    }
+        $scope.getSelectedItemText = function (itemSelected) {
+            return itemSelected.name;
+        }
 
-    $scope.onItemSearchStates = function (searchString) {
-        var deferred = $q.defer();
-        deferred.resolve(a11yCommon.getFilteredStates(searchString));
-        return deferred.promise;
-    }
+        $scope.getOptionTemplate = function (searchString, selectedOption) {
+            var xName = selectedOption.name;
+            var regExBold = new RegExp('('+searchString+')(?!<\/strong>)','gi');
+            var subst = '<strong>$1</strong>';
+            xName = xName.replace(regExBold, subst);
+            return '<div class="custom-type-ahead-option"><div class="data">' + xName + '</div></div>';
+        }
 
-    $scope.onItemSearchCities = function (searchString) {
-        var deferred = $q.defer();
-        deferred.resolve(a11yCommon.getFilteredCities(searchString));
-        return deferred.promise;
-    }
+        $scope.getSelectedItemText1 = function (itemSelected) {
+            return itemSelected.name + ' ' + (itemSelected.code);
+        }
 
-    $scope.getSelectedItemText = function (itemSelected) {
-        return itemSelected.name;
-    }
+        $scope.getOptionTemplate1 = function (x) {
+            return '<div class="custom-type-ahead-option1"><div class="code" aria-hidden="true">' + x.code + '</div>&nbsp;&nbsp;<div class="data" aria-hidden="true">' + x.name + '</div></div>';
+        }
 
-    $scope.getOptionTemplate = function (x) {
-        return '<div class="custom-type-ahead-option"><div class="code">' + x.code + '</div>&nbsp;&nbsp;<div class="data">' + x.name + '</div></div>';
-    }
-
-    $scope.getSelectedItemText1 = function (itemSelected) {
-        return itemSelected.name + ' ' + (itemSelected.code);
-    }
-
-    $scope.getOptionTemplate1 = function (x) {
-        return '<div class="custom-type-ahead-option1"><div class="code">' + x.code + '</div>&nbsp;&nbsp;<div class="data">' + x.name + '</div></div>';
-    }
-}]);
+        $scope.aclConfig = {
+            searchTreshold: 1,
+            a11yUid: 'AsianCountriesList',
+            a11yAriaLabel: 'Asian Countries List',
+            onSearch: function (searchString) {
+                var deferred = $q.defer();
+                deferred.resolve(a11yCommon.getFilteredCountries(searchString));
+                return deferred.promise;
+            },
+            getOptionTemplate: function (searchString, selectedOption) { return $scope.getOptionTemplate(searchString, selectedOption); },
+            getOptionText: function (itemSelected) { return $scope.getSelectedItemText(itemSelected); },
+            onSelect: function () { $scope.onItemSelected(); },
+        }
+        $scope.ussConfig = {
+            searchTreshold: 2,
+            a11yUid: 'USStatesList',
+            a11yAriaLabel: 'US States List',
+            onSearch: function (searchString) {
+                var deferred = $q.defer();
+                deferred.resolve(a11yCommon.getFilteredStates(searchString));
+                return deferred.promise;
+            },
+            getOptionTemplate: function (searchString,selectedOption) { return $scope.getOptionTemplate(searchString,selectedOption); },
+            getOptionText: function (itemSelected) { return $scope.getSelectedItemText(itemSelected); },
+            onSelect: function () { $scope.onItemSelected(); },
+        }
+        $scope.uscConfig = {
+            searchTreshold: 3,
+            a11yUid: 'USCities',
+            //a11yAriaLabel: '', //OPTIONALall 
+            onSearch: function (searchString) {
+                var deferred = $q.defer();
+                deferred.resolve(a11yCommon.getFilteredCities(searchString));
+                return deferred.promise;
+            },
+            //getOptionTemplate: function () { }, //OPTIONAL
+            //getOptionText: function () { }, //OPTIONAL
+            //onSelect: function () {  }, //OPTIONAL
+        }
+    }]);
 
 
 

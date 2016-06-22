@@ -5,52 +5,43 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
         replace: true,
         transclude: true,
         scope: {
-            a11yUid: '@',
-            a11yAriaLabel: '@',
-            searchTreshold: '@',
-            onSearch: '&',
-            getOptionTemplate: '&',
-            getOptionText: '&',
-            onSelect: '&',
             selectedText: '=',
+            config: '=',
         },
         templateUrl: 'a11yTypeAhead/a11yTypeAhead.html',
-        link: function (scope, element, attr) {
+        controller: function ($scope, $element) {
             var keys = a11yCommon.getKeyCodes();
-            scope.suggestions = null;
+            $scope.suggestions = null;
             var taTimerPromise = null;
-            scope.searchRequestCounter = 0;
+            $scope.searchRequestCounter = 0;
 
             $timeout(function () {
-                scope.taLabel = element.find('#' + scope.a11yUid + '-label');
-                scope.taEdit = element.find('#' + scope.a11yUid + '-edit');
-                scope.taListBox = element.find('#' + scope.a11yUid + '-list');
-                scope.taOptions = scope.taListBox.find('li');
-                scope.taSelected = scope.taOptions.filter('.selected');
-                if (scope.taLabel.text() == "") scope.taLabel.text(scope.a11yUid);
+                $scope.taLabel = $element.find('#' + $scope.config.a11yUid + '-label');
+                $scope.taEdit = $element.find('#' + $scope.config.a11yUid + '-edit');
+                $scope.taListBox = $element.find('#' + $scope.config.a11yUid + '-list');
+                $scope.taOptions = $scope.taListBox.find('li');
+                $scope.taSelected = $scope.taOptions.filter('.selected');
+                if (!$scope.config.a11yAriaLabel) $scope.taLabel.text($scope.config.a11yUid + $scope.taLabel.text());
+            }, 1);
 
-                scope.searchTreshold = parseInt(scope.searchTreshold);
-                if (isNaN(scope.searchTreshold)) scope.searchTreshold = 3;
-            }, 200);
-
-            scope.textBoxKeyDown = function (Event) {
+            $scope.textBoxKeyDown = function (Event) {
                 //console.log('textBoxKeyDown');
-                var currentItem = scope.taOptions.filter('.selected');
-                var currentIndex = scope.taOptions.index(currentItem);
+                var currentItem = $scope.taOptions.filter('.selected');
+                var currentIndex = $scope.taOptions.index(currentItem);
 
                 switch (Event.keyCode) {
                     case keys.tab: {
-                        scope.selectOption(currentItem, false); //currentItem[0] !== scope.taSelected[0]);
-                        if (scope.isOpen() == true) {
-                            scope.hideOption();
+                        $scope.selectOption(currentItem, false); //currentItem[0] !== $scope.taSelected[0]);
+                        if ($scope.isOpen() == true) {
+                            $scope.hideOption();
                         }
                         return true;
                     }
                     case keys.esc: {
-                        scope.itemSelect(scope.taSelected, false);
-                        scope.taEdit.select();
-                        if (scope.isOpen() == true) {
-                            scope.hideOption();
+                        $scope.itemSelect($scope.taSelected, false);
+                        $scope.taEdit.select();
+                        if ($scope.isOpen() == true) {
+                            $scope.hideOption();
                         }
                         Event.stopPropagation();
                         return false;
@@ -60,16 +51,16 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                             return true;
                         }
 
-                        if (scope.isOpen() == false) {
-                            if (scope.taOptions.length > 0)
-                                scope.showOption();
+                        if ($scope.isOpen() == false) {
+                            if ($scope.taOptions.length > 0)
+                                $scope.showOption();
                         }
                         else {
-                            scope.selectOption(currentItem, currentItem[0] !== scope.taSelected[0]);
-                            scope.hideOption();
-                            $timeout(function () { scope.taEdit.focus(); }, 5);
+                            $scope.selectOption(currentItem, currentItem[0] !== $scope.taSelected[0]);
+                            $scope.hideOption();
+                            $timeout(function () { $scope.taEdit.focus(); }, 5);
                         }
-                        scope.taEdit.select();
+                        $scope.taEdit.select();
                         Event.stopPropagation();
                         return false;
                     }
@@ -78,27 +69,27 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                             return true;
                         }
 
-                        if (Event.altKey && scope.isOpen()) {
-                            scope.selectOption(currentItem, currentItem[0] !== scope.taSelected[0]);
-                            scope.taEdit.select();
-                            scope.hideOption();
+                        if (Event.altKey && $scope.isOpen()) {
+                            $scope.selectOption(currentItem, currentItem[0] !== $scope.taSelected[0]);
+                            $scope.taEdit.select();
+                            $scope.hideOption();
                         }
                         else {
                             if (currentIndex > 0) {
-                                var prev = scope.taOptions.eq(currentIndex - 1);
+                                var prev = $scope.taOptions.eq(currentIndex - 1);
 
                                 currentItem.removeClass('selected');
                                 prev.addClass('selected');
 
-                                if (scope.isOpen() == true) {
-                                    scope.itemSelect(prev, false);
-                                    scope.taListBox.scrollTop(scope.getScrollPos(prev));
+                                if ($scope.isOpen() == true) {
+                                    $scope.itemSelect(prev, false);
+                                    $scope.taListBox.scrollTop($scope.getScrollPos(prev));
                                 }
                                 else {
-                                    scope.itemSelect(prev, true);
+                                    $scope.itemSelect(prev, true);
                                 }
 
-                                $timeout(function () { scope.taEdit.select(); }, 1);
+                                $timeout(function () { $scope.taEdit.select(); }, 1);
                             }
                         }
 
@@ -110,25 +101,25 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                             return true;
                         }
 
-                        if (Event.altKey && !scope.isOpen() && scope.taOptions.length > 0) {
-                            scope.showOption();
+                        if (Event.altKey && !$scope.isOpen() && $scope.taOptions.length > 0) {
+                            $scope.showOption();
                         }
                         else {
-                            if (currentIndex < scope.taOptions.length - 1) {
-                                var prev = scope.taOptions.eq(currentIndex + 1);
+                            if (currentIndex < $scope.taOptions.length - 1) {
+                                var prev = $scope.taOptions.eq(currentIndex + 1);
 
                                 currentItem.removeClass('selected');
                                 prev.addClass('selected');
 
-                                if (scope.isOpen() == true) {
-                                    scope.itemSelect(prev, false);
-                                    scope.taListBox.scrollTop(scope.getScrollPos(prev));
+                                if ($scope.isOpen() == true) {
+                                    $scope.itemSelect(prev, false);
+                                    $scope.taListBox.scrollTop($scope.getScrollPos(prev));
                                 }
                                 else {
-                                    scope.itemSelect(prev, true);
+                                    $scope.itemSelect(prev, true);
                                 }
 
-                                $timeout(function () { scope.taEdit.select(); }, 1);
+                                $timeout(function () { $scope.taEdit.select(); }, 1);
                             }
                         }
 
@@ -139,7 +130,7 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                 return true;
             };
 
-            scope.textBoxKeyUp = function (Event) {
+            $scope.textBoxKeyUp = function (Event) {
                 //console.log('textBoxKeyUp');
                 if (Event.shiftKey || Event.ctrlKey || Event.altKey) {
                     return true;
@@ -163,93 +154,96 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                 }  //Check
 
                 if (Event.keyCode == keys.backspace || Event.keyCode == keys.del) {
-                    scope.clearOption();
+                    $scope.clearOption();
                 }
 
-                var searchString = scope.taEdit.val();
-                if (searchString.length >= scope.searchTreshold) {
-                    $timeout.cancel(scope.searchTimer);
-                    scope.searchTimer = $timeout(function () {
-                        $('#' + scope.a11yUid + '-result').text('Please wait while we fetch suggestions.');
+                var searchString = $scope.taEdit.val();
+                if (searchString.length >= $scope.config.searchTreshold) {
+                    $timeout.cancel($scope.searchTimer);
+                    $scope.searchTimer = $timeout(function () {
+                        $('#' + $scope.config.a11yUid + '-result').text('Please wait while we fetch suggestions.');
                         function searchClosure(searchString, searchCounter) {
-                            scope.onSearch({ 'searchString': searchString }).then(function (result) {
-                                console.log('searchCounter ' + searchCounter + '  searchString ' + searchString + '  searchRC' + scope.searchRequestCounter + '"');
-                                if (searchCounter != scope.searchRequestCounter) return;
+                            $scope.searchString = searchString;
+                            $scope.config.onSearch(searchString).then(function (result) {
+                                console.log('searchCounter ' + searchCounter + '  searchString ' + searchString + '  searchRC' + $scope.searchRequestCounter + '"');
+                                if (searchCounter != $scope.searchRequestCounter) return;
                                 console.log("passed");
-                                scope.searchRequestCounter = 0;
-                                scope.suggestions = result;
+                                $scope.searchRequestCounter = 0;
+                                $scope.suggestions = result;
                                 if (result.length > 0) {
                                     $timeout(function () {
-                                        scope.taOptions = scope.taListBox.find('li');
+                                        $scope.taOptions = $scope.taListBox.find('li');
+                                        if ($scope.isFocus()) {
+                                            $('#' + $scope.config.a11yUid + '-result').text('We have received ' + result.length + ' suggestions.  Please use up/down arrow to select');
 
-                                        if (scope.taEdit.val().length < scope.searchTreshold) {
-                                            scope.clearOption("No Suggestions available.");
+                                            if (!$scope.isOpen()) {
+                                                $scope.showOption();
+                                            }
+                                        }
+                                        if ($scope.taEdit.val().length < $scope.searchTreshold) {
+                                            $scope.clearOption("No Suggestions available.");
                                         } // check if this is needed
                                     }, 1);
 
-                                    if (scope.isFocus()) {
-                                        $('#' + scope.a11yUid + '-result').text('We have received ' + result.length + ' suggestions.  Please use up/down arrow to select');
 
-                                        if (!scope.isOpen()) {
-                                            scope.showOption();
-                                        }
-                                    }
                                 }
                                 else {
-                                    scope.clearOption("No Suggestions available.");
+                                    $scope.clearOption("No Suggestions available.");
                                 }
                             });
                         }
-                        searchClosure(searchString, ++scope.searchRequestCounter);
+                        searchClosure(searchString, ++$scope.searchRequestCounter);
                     }, 500);
                 }
                 else {
-                    scope.clearOption("No Suggestions available.");
+                    if ($scope.isOpen()) {
+                        $scope.clearOption("No Suggestions available.");
+                    }
                 }
                 Event.stopPropagation();
                 return false;
             }
 
-            scope.textBoxBlur = function (Event) {
+            $scope.textBoxBlur = function (Event) {
                 console.log('textBoxBlur');
-                if (scope.isOpen() == true) {
-                    scope.selectOption(scope.taOptions.filter('.selected'), false);
+                if ($scope.isOpen() == true) {
+                    $scope.selectOption($scope.taOptions.filter('.selected'), false);
                     $timeout.cancel(taTimerPromise);
                     taTimerPromise = $timeout(function () {
-                        scope.hideOption();
+                        $scope.hideOption();
                     }, 200);
                 }
 
-                $('#' + scope.a11yUid + '-result').text("");
+                $('#' + $scope.config.a11yUid + '-result').text("");
 
                 $timeout(function () {
-                    scope.taEdit.removeAttr('aria-activedescendant');
+                    $scope.taEdit.removeAttr('aria-owns').removeAttr('aria-activedescendant');
                 }, 1000);
 
                 return true;
             }
 
-            scope.textBoxFocus = function (Event) {
+            $scope.textBoxFocus = function (Event) {
                 console.log('textBoxFocus');
                 $timeout(function () {
-                    scope.taEdit.removeAttr('aria-activedescendant');
-                    if (!scope.taEdit.attr('aria-activedescendant') || scope.taEdit.attr('aria-activedescendant') == "") {
-                        if (scope.taSelected.attr('id')) {
-                            scope.taEdit.attr('aria-activedescendant', scope.taSelected.attr('id'));
+                    $scope.taEdit.removeAttr('aria-owns').removeAttr('aria-activedescendant');
+                    if (!$scope.taEdit.attr('aria-activedescendant') || $scope.taEdit.attr('aria-activedescendant') == "") {
+                        if ($scope.taSelected.attr('id')) {
+                            $scope.taEdit.attr('aria-owns', $scope.config.a11yUid + '-list').attr('aria-activedescendant', $scope.taSelected.attr('id'));
                         }
                     }
                 }, 1000);
             }
 
-            scope.listBoxFocus = function (Event) {
+            $scope.listBoxFocus = function (Event) {
                 $timeout.cancel(taTimerPromise);
-                scope.taEdit.focus();
+                $scope.taEdit.focus();
 
                 Event.stopPropagation();
                 return false;
             }
 
-            scope.listBoxClick = function (Event) {
+            $scope.listBoxClick = function (Event) {
                 if (angular.element(Event.target)[0].nodeName == "UL")
                     return true;
 
@@ -261,12 +255,12 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                     currentItemId = '#' + Event.target.id;
                 }
 
-                var currentItem = scope.taOptions.filter(currentItemId);
-                scope.selectOption(currentItem, currentItem[0] !== scope.taSelected[0]);
-                scope.taEdit.select(); // Check
-                scope.hideOption();
+                var currentItem = $scope.taOptions.filter(currentItemId);
+                $scope.selectOption(currentItem, currentItem[0] !== $scope.taSelected[0]);
+                $scope.taEdit.select(); // Check
+                $scope.hideOption();
                 $timeout(function () {
-                    scope.taEdit.focus();
+                    $scope.taEdit.focus();
                 }, 200);
 
                 Event.stopPropagation();
@@ -274,90 +268,96 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
 
             }
 
-            scope.itemSelect = function (itemSelected, itemSelectTrigger) {
+            $scope.itemSelect = function (itemSelected, itemSelectTrigger) {
                 console.log('itemSelect "' + itemSelected.text() + '"');
                 if (itemSelected.length == 0) return;
 
-                var selectItemText = scope.getOptionText({ 'itemSelected': scope.suggestions[scope.taOptions.index(itemSelected)] });
-                if (!selectItemText) selectItemText = itemSelected.text();
-                scope.taEdit.val(selectItemText);
+                var selectItemText;
+                if ($scope.config.getOptionTemplate) {
+                    selectItemText = $scope.config.getOptionText($scope.suggestions[$scope.taOptions.index(itemSelected)]);
+                } else {
+                    selectItemText = itemSelected.text();
+                }
 
-                scope.taEdit.attr('aria-activedescendant', itemSelected.attr('id'));
+                $scope.taEdit.attr('aria-owns', $scope.config.a11yUid + '-list').attr('aria-activedescendant', itemSelected.attr('id'));
                 if (itemSelectTrigger) {
-                    scope.taSelected = itemSelected;
-                    scope.selectedText = itemSelected.text();
+                    $scope.taEdit.val(selectItemText);
+                    $scope.taSelected = itemSelected;
+                    if ($scope.selectedText)
+                        $scope.selectedText = itemSelected.text();
                     $timeout(function () {
-                        if (scope.isFocus()) scope.onSelect();
+                        if ($scope.isFocus() && $scope.config.onSelect) $scope.config.onSelect();
+                        $scope.clearOption();
                     }, 10);
                 }
             }
 
-            scope.isFocus = function () {
-                return (document.activeElement.id == scope.taEdit.get(0).id);
+            $scope.isFocus = function () {
+                return (document.activeElement.id == $scope.taEdit.get(0).id);
             }
 
-            scope.isOpen = function () {
-                return (scope.taListBox.css('display') == 'block');
+            $scope.isOpen = function () {
+                return ($scope.taListBox.css('display') == 'block');
             };
 
-            scope.hideOption = function () {
-                scope.taOptions.removeClass('selected');
-                scope.taSelected.addClass('selected');
-                scope.taListBox.hide();
-                scope.taEdit.attr('aria-expanded', 'false');
+            $scope.hideOption = function () {
+                $scope.taOptions.removeClass('selected');
+                $scope.taSelected.addClass('selected');
+                $scope.taListBox.hide();
+                $scope.taEdit.attr('aria-expanded', 'false');
             }
 
-            scope.showOption = function () {
-                scope.taOptions.removeClass('selected');
-                scope.taSelected.addClass('selected');
-                scope.taListBox.show();
-                scope.taEdit.attr('aria-expanded', 'true');
+            $scope.showOption = function () {
+                $scope.taOptions.removeClass('selected');
+                $scope.taSelected.addClass('selected');
+                $scope.taListBox.show();
+                $scope.taEdit.attr('aria-expanded', 'true');
 
-                if (scope.taSelected.length == 0) {
-                    scope.selectOption(scope.taOptions.first(), false);////
-                }
-
-                scope.taListBox.css({
-                    'margin-left': scope.taEdit.offset().left - scope.taLabel.offset().left,
-                    'width': scope.taEdit.outerWidth()
-                }).scrollTop(scope.getScrollPos(scope.taSelected));
+                $scope.taListBox.css({
+                    'margin-left': $scope.taEdit.offset().left - $scope.taLabel.offset().left,
+                    'width': $scope.taEdit.outerWidth()
+                }).scrollTop(0);//$scope.getScrollPos($scope.taSelected)
             }
 
-            scope.selectOption = function (selectedOption, itemSelectTrigger) {
-                scope.taOptions.removeClass('selected');
-                scope.taSelected = selectedOption.addClass('selected');
-                scope.itemSelect(scope.taSelected, itemSelectTrigger);
+            $scope.selectOption = function (selectedOption, itemSelectTrigger) {
+                $scope.taOptions.removeClass('selected');
+                $scope.taSelected = selectedOption.addClass('selected');
+                $scope.itemSelect($scope.taSelected, itemSelectTrigger);
             }
 
-            scope.clearOption = function (ariaMessage) {
-                $('#' + scope.a11yUid + '-result').text(ariaMessage);
-                scope.suggestions = null;
-                scope.taOptions = scope.taOptions.filter(function () { return false; });
-                scope.hideOption();
+            $scope.clearOption = function (ariaMessage) {
+                $('#' + $scope.config.a11yUid + '-result').text(ariaMessage);
+                $scope.suggestions = null;
+                $scope.taOptions = $scope.taOptions.filter(function () { return false; });
+                $scope.hideOption();
             }
 
-            scope.selectText = function (start, end) {
-                var editNode = scope.taEdit.get(0);
+            $scope.selectText = function (start, end) {
+                var editNode = $scope.taEdit.get(0);
                 if (editNode.setSelectionRange) {
                     editNode.setSelectionRange(start, end);
                 }
             }
 
-            scope.getScrollPos = function (selectedOption) {
+            $scope.getScrollPos = function (selectedOption) {
                 var scrollHeight = 0;
-                scope.taOptions.filter(':lt(' + scope.taOptions.index(selectedOption) + ')').each(function () {
+                $scope.taOptions.filter(':lt(' + $scope.taOptions.index(selectedOption) + ')').each(function () {
                     scrollHeight += $(this).outerHeight();
                 });
                 return scrollHeight;
             }
 
-            scope.getHtml = function (suggestion) {
-                var optionTemplate = scope.getOptionTemplate({ 'suggestion': suggestion });
-                if (!optionTemplate) optionTemplate = scope.defaultTemplate(suggestion);
+            $scope.getHtml = function (suggestion) {
+                var optionTemplate;
+                if ($scope.config.getOptionTemplate) {
+                    optionTemplate = $scope.config.getOptionTemplate($scope.searchString, suggestion);
+                } else {
+                    optionTemplate = $scope.defaultTemplate(suggestion);
+                }
                 return $sce.trustAsHtml(optionTemplate);
             }
 
-            scope.defaultTemplate = function (suggestion) {
+            $scope.defaultTemplate = function (suggestion) {
                 if (typeof (suggestion) != "object")
                     return suggestion.toString();
                 var keyNames = Object.keys(suggestion);
@@ -369,27 +369,20 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
 
                 return returnValue.trim();
             }
-        },
-        controller: function ($scope, $element) {
         }
     }
+}]).directive('setOptionAriaLabel', ['$compile', function ($compile) {
+    return {
+        scope: true,
+        link: function (scope, element, attrs) {
+            var elmnt;
+            attrs.$observe('id', function (myTemplate) {
+                if (angular.isDefined(myTemplate)) {
+                    if (!scope.config.getOptionTemplate) return;
+                    $(element).attr("aria-label", scope.config.getOptionText(scope.suggestion));
+                }
+            });
+        }
+    };
 }]);
 
-
-a11yModule.run(['$templateCache', function ($templateCache) {
-    'use strict';
-
-    $templateCache.put('a11yTypeAhead/a11yTypeAhead.html',
-        "<div tabindex=\"-1\" ng-cloak>\r" +
-        "    <div id=\"{{a11yUid}}\" class=\"a11y-type-ahead\" aria-label=\"{{a11yAriaLabel}}\" role=\"application\">\r" +
-        "        <div id=\"{{a11yUid}}-instruction\" aria-hidden=\"true\" class=\"sr-only\">Please type minimum 3 letters to get the suggestion list box.</div>\r" +
-        "        <div id=\"{{a11yUid}}-result\" aria-live=\"polite\" aria-relevant=\"text\" class=\"sr-only\"></div>\r" +
-        "        <label id=\"{{a11yUid}}-label\">{{a11yAriaLabel}}</label><span class=\"pull-left\" aria-hidden=\"true\">:</span>\r" +
-        "        <input id=\"{{a11yUid}}-edit\" type=\"text\" aria-owns=\"{{a11yUid}}-list\" aria-describedby=\"{{a11yUid}}-instruction\" aria-expanded=\"false\" aria-labelledby=\"{{a11yUid}}-label\" ng-keydown=\"textBoxKeyDown($event)\" ng-keyup=\"textBoxKeyUp($event)\" ng-blur=\"textBoxBlur($event)\" ng-focus=\"textBoxFocus($event)\">\r" +
-        "        <ul id=\"{{a11yUid}}-list\" tabindex=\"-1\" role=\"listbox\" style=\"display: none;\" ng-focus=\"listBoxFocus($event)\" ng-mousedown=\"listBoxClick($event)\">\r" +
-        "            <li ng-repeat=\"suggestion in suggestions\" id=\"{{a11yUid}}-item-{{$index}}\" role=\"option\"><span ng-bind-html=\"getHtml(suggestion)\"></span></li>\r" +
-        "        </ul>\r" +
-        "    </div>\r" +
-        "</div>\r"
-    );
-}]);

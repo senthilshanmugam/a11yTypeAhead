@@ -1,5 +1,5 @@
 ﻿'use strict';
-a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yCommon', function ($timeout, $sce, $compile, a11yCommon) {
+angular.module('a11yModule').directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yCommon', function ($timeout, $sce, $compile, a11yCommon) {
     return {
         restrict: 'E',
         replace: true,
@@ -21,7 +21,7 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                 $scope.taListBox = $element.find('#' + $scope.config.a11yUid + '-list');
                 $scope.taOptions = $scope.taListBox.find('li');
                 $scope.taSelected = $scope.taOptions.filter('.selected');
-                if (!$scope.config.a11yAriaLabel) $scope.taLabel.text($scope.config.a11yUid + $scope.taLabel.text());
+                if (!$scope.config.a11yAriaLabel) $scope.taLabel.find('.a11yLabel').text($scope.config.a11yUid);
                 if ($scope.config.hideLabel) $scope.taLabel.addClass('sr-only');
                 $scope.taListBox.on('mousewheel DOMMouseScroll', function (e) {
                     var event = e.originalEvent;
@@ -29,16 +29,24 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
                     this.scrollTop += (d < 0 ? 1 : -1) * 30;
                     e.preventDefault();
                 });
+
+                if (!$scope.config.searchTreshold)
+                    $scope.config.searchTreshold = 3;
+                if (!$scope.config.hideLabel)
+                    $scope.config.hideLabel = false;
+                if (!$scope.config.getOptionTemplate)
+                    $scope.config.getOptionTemplate = $scope.defaultTemplate;
+                if (!$scope.config.getOptionText)
+                    $scope.config.getOptionText = $scope.defaultText;
             }, 1);
 
             $scope.textBoxKeyDown = function (Event) {
-                //console.log('textBoxKeyDown');
                 var currentItem = $scope.taOptions.filter('.selected');
                 var currentIndex = $scope.taOptions.index(currentItem);
 
                 switch (Event.keyCode) {
                     case keys.tab: {
-                        $scope.selectOption(currentItem, false); //currentItem[0] !== $scope.taSelected[0]);
+                        $scope.selectOption(currentItem, false);
                         if ($scope.isOpen() == true) {
                             $scope.hideOption();
                         }
@@ -138,7 +146,6 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
             };
 
             $scope.textBoxKeyUp = function (Event) {
-                //console.log('textBoxKeyUp');
                 if (Event.shiftKey || Event.ctrlKey || Event.altKey) {
                     return true;
                 }  // Check
@@ -212,7 +219,6 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
             }
 
             $scope.textBoxBlur = function (Event) {
-                console.log('textBoxBlur');
                 if ($scope.isOpen() == true) {
                     $scope.selectOption($scope.taOptions.filter('.selected'), false);
                     $timeout.cancel(taTimerPromise);
@@ -231,7 +237,6 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
             }
 
             $scope.textBoxFocus = function (Event) {
-                console.log('textBoxFocus');
                 $timeout(function () {
                     $scope.taEdit.removeAttr('aria-owns').removeAttr('aria-activedescendant');
                     if (!$scope.taEdit.attr('aria-activedescendant') || $scope.taEdit.attr('aria-activedescendant') == "") {
@@ -276,15 +281,9 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
             }
 
             $scope.itemSelect = function (itemSelected, itemSelectTrigger) {
-                console.log('itemSelect "' + itemSelected.text() + '"');
                 if (itemSelected.length == 0) return;
 
-                var selectItemText;
-                if ($scope.config.getOptionTemplate) {
-                    selectItemText = $scope.config.getOptionText($scope.suggestions[$scope.taOptions.index(itemSelected)]);
-                } else {
-                    selectItemText = itemSelected.text();
-                }
+                var selectItemText = $scope.config.getOptionText($scope.suggestions[$scope.taOptions.index(itemSelected)]);
 
                 $scope.taEdit.attr('aria-owns', $scope.config.a11yUid + '-list').attr('aria-activedescendant', itemSelected.attr('id'));
                 if (itemSelectTrigger) {
@@ -355,26 +354,23 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
             }
 
             $scope.getHtml = function (suggestion) {
-                var optionTemplate;
-                if ($scope.config.getOptionTemplate) {
-                    optionTemplate = $scope.config.getOptionTemplate($scope.searchString, suggestion);
-                } else {
-                    optionTemplate = $scope.defaultTemplate(suggestion);
-                }
-                return $sce.trustAsHtml(optionTemplate);
+                return $sce.trustAsHtml($scope.config.getOptionTemplate($scope.searchString, suggestion));
             }
 
-            $scope.defaultTemplate = function (suggestion) {
+            $scope.defaultTemplate = function (searchString, suggestion) {
                 if (typeof (suggestion) != "object")
                     return suggestion.toString();
                 var keyNames = Object.keys(suggestion);
                 var returnValue = '';
 
-                for (i = 0; i < keyNames.length - 1; i++) {
+                for (var i = 0; i < keyNames.length - 1; i++) {
                     returnValue += suggestion[keyNames[i]] + ' ';
                 }
-
                 return returnValue.trim();
+            }
+
+            $scope.defaultText = function (suggestion) {
+                return $scope.defaultTemplate("", suggestion);
             }
         }
     }
@@ -385,11 +381,9 @@ a11yModule.directive('a11yTypeAhead', ['$timeout', '$sce', '$compile', 'a11yComm
             var elmnt;
             attrs.$observe('id', function (myTemplate) {
                 if (angular.isDefined(myTemplate)) {
-                    if (!scope.config.getOptionTemplate) return;
                     $(element).attr("aria-label", scope.config.getOptionText(scope.suggestion));
                 }
             });
         }
     };
 }]);
-

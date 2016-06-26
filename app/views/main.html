@@ -1,37 +1,22 @@
 <div class="jumbotron hidden">
-  <h1>Accessible Type Ahead</h1>
-  <p class="lead">
-    Angular Type Ahead directive with Accessibility.
-  </p>
+    <h1>Accessible Type Ahead</h1>
+    <p class="lead">
+        Angular Type Ahead directive with Accessibility.
+    </p>
 </div>
 
 <div class="row marketing">
-  <h4>HTML</h4>
-  <pre>
-&lt;a11y-type-ahead a11y-uid="AsianCountriesList"
-        a11y-aria-label="Asian Countries List"
-        on-search="onItemSearchCountries(searchString)"
-        get-option-template="getOptionTemplate1(suggestion)"
-        get-option-text="getSelectedItemText1(itemSelected)"
-        on-select="onItemSelected()"
-        selected-text="name" /&gt;
-  </pre>
+    <h4>Components</h4>
+    <ul>
+        <li>Type Ahead</li>
+        <li>Scroll</li>
+    </ul>
+    <h4>Angular</h4>
+    <p>
+        AngularJS is a toolset for building the framework most suited to your application development.
+    </p>
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+    <h4>Karma</h4>
+    <p>Spectacular Test Runner for JavaScript.</p>
 </div>
 
-<form ng-controller="a11yTypeAheadController" autocomplete="off">
-    <a11y-type-ahead selected-text="name"
-                     config="aclConfig" ></a11y-type-ahead>
-
-    <a11y-type-ahead selected-text="name" 
-                     config="ussConfig" ></a11y-type-ahead>
-
-    <a11y-type-ahead config="uscConfig" ></a11y-type-ahead>
-</form>

@@ -2,5 +2,13 @@
   {
     "outputFile": "app/a11yTypeAhead/a11yTypeAhead.css",
     "inputFile": "app/a11yTypeAhead/a11yTypeAhead.less"
+  },
+  {
+    "outputFile": "app/a11yCommon/a11yCommon.css",
+    "inputFile": "app/a11yCommon/a11yCommon.less"
+  },
+  {
+    "outputFile": "app/a11yScroll/a11yScroll.css",
+    "inputFile": "app/a11yScroll/a11yScroll.less"
   }
 ]

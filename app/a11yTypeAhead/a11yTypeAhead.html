@@ -2,7 +2,7 @@
     <div id="{{config.a11yUid}}" class="a11y-type-ahead" aria-label="{{config.a11yAriaLabel}}" role="application">
         <div id="{{config.a11yUid}}-instruction" aria-hidden="true" class="sr-only">Please type minimum {{config.searchTreshold}} letters to get the suggestion list box.</div>
         <div id="{{config.a11yUid}}-result" aria-live="polite" aria-relevant="text" class="sr-only"></div>
-        <label id="{{config.a11yUid}}-label">{{config.a11yAriaLabel}}<span aria-hidden="true">: </span></label>
+        <label id="{{config.a11yUid}}-label"><span class="a11yLabel pull-left">{{config.a11yAriaLabel}}</span><span class="semi-colon pull-left"></span></label>
         <input id="{{config.a11yUid}}-edit" type="text" aria-owns="{{config.a11yUid}}-list" aria-describedby="{{config.a11yUid}}-instruction" aria-expanded="false" aria-labelledby="{{config.a11yUid}}-label" ng-keydown="textBoxKeyDown($event)" ng-keyup="textBoxKeyUp($event)" ng-blur="textBoxBlur($event)" ng-focus="textBoxFocus($event)">
         <ul id="{{config.a11yUid}}-list" tabindex="-1" role="listbox" style="display: none;" ng-focus="listBoxFocus($event)" ng-mousedown="listBoxClick($event)">
             <li ng-repeat="suggestion in suggestions" id="{{config.a11yUid}}-item-{{$index}}" set-option-aria-label role="option"><span ng-bind-html="getHtml(suggestion)"></span></li>

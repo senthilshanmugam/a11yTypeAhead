@@ -1,13 +1,6 @@
 'use strict';
-var a11yModule = angular.module('a11yModule', []);
+var a11yModule = angular.module('a11yModule', ['ui.bootstrap']);
 a11yModule.factory('a11yCommon', ['$q', '$timeout', function ($q, $timeout) {
-    /*var currentUser = {};
-
-    function cloneObject(object) {
-        return JSON.parse(JSON.stringify(object));
-    };*/
-
-
     return {
         getKeyCodes: function () {
             return {
@@ -112,23 +105,6 @@ a11yModule.factory('a11yCommon', ['$q', '$timeout', function ($q, $timeout) {
             { "code": "WV", "name": "West Virginia" },
             { "code": "WI", "name": "Wisconsin" },
             { "code": "WY", "name": "Wyoming" },
-            { "code": "OR", "name": "New Oregon" },
-            { "code": "PA", "name": "New Pennsylvania" },
-            { "code": "PR", "name": "New Puerto Rico" },
-            { "code": "RI", "name": "New Rhode Island" },
-            { "code": "SC", "name": "New South Carolina" },
-            { "code": "SD", "name": "New South Dakota" },
-            { "code": "OK", "name": "New Oklahoma New Oklahoma New Oklahoma New Oklahoma New Oklahoma" },
-            { "code": "TN", "name": "New Tennessee" },
-            { "code": "TX", "name": "New Texas" },
-            { "code": "UT", "name": "New Utah" },
-            { "code": "VT", "name": "New Vermont" },
-            { "code": "VA", "name": "New Virginia" },
-            { "code": "VI", "name": "New Virgin Islands" },
-            { "code": "WA", "name": "New Washington" },
-            { "code": "WV", "name": "New West Virginia" },
-            { "code": "WI", "name": "New Wisconsin" },
-            { "code": "WY", "name": "New Wyoming" }
         ],
 
         USCities: ['Abilene',

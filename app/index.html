@@ -14,8 +14,10 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <!-- build:css(.tmp) styles/a11yTypeAhead.css -->
-    <link rel="stylesheet" href="styles/a11yTypeAhead.css">
+    <!-- build:css styles\a11y.css -->
+    <link rel="stylesheet" href="a11yCommon/a11yCommon.css">
+    <link rel="stylesheet" href="a11yTypeAhead/a11yTypeAhead.css">
+    <link href="a11yScroll/a11yScroll.css" rel="stylesheet" />
     <!-- endbuild -->
 </head>
 <body ng-app="a11yComponentsApp">
@@ -40,9 +42,11 @@
 
                 <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#/">Home</a></li>
-                        <li><a ng-href="#/about">About</a></li>
+                    <ul class="nav navbar-nav" ng-controller="menuCtrl">
+                        <li ng-class="getClass('/')"><a ng-href="#/">Home</a></li>
+                        <li ng-class="getClass('/a11yTypeAhead')"><a ng-href="#/a11yTypeAhead">Type Ahead</a></li>
+                        <li ng-class="getClass('/a11yScroll')"><a ng-href="#/a11yScroll">Scroll</a></li>
+                        <li ng-class="getClass('/about')"><a ng-href="#/about">About</a></li>
                         <li><a ng-href="#/">Contact</a></li>
                     </ul>
                 </div>
@@ -87,15 +91,21 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/about.js"></script>
-    <script src="a11yCommon/a11yCommon.js"></script>
-    <script src="a11yTypeAhead/a11yTypeAhead.js"></script>
-    <script src="a11yTypeAhead/a11yTypeAheadController.js"></script>
     <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/a11y.js -->
+    <script src="a11yCommon/a11yCommon.js"></script>
+    <script src="a11yTypeAhead/a11yTypeAheadController.js"></script>
+    <script src="a11yTypeAhead/a11yTypeAhead.js"></script>
+    <script src="a11yScroll/a11yScrollController.js"></script>
+    <script src="a11yScroll/a11yScroll.js"></script>
+    <!-- endbuild -->
+  
 </body>
 </html>

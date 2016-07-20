@@ -44,6 +44,10 @@ angular
             templateUrl: 'views/a11yScroll-main.html',
             controller: 'a11yScrollController',
         })
+        .when('/a11ySlickGrid', {
+            templateUrl: 'views/a11ySlickGrid-main.html',
+            controller: 'a11ySlickGridController',
+        })
         .when('/about', {
             templateUrl: 'views/about.html',
             controller: 'AboutCtrl',

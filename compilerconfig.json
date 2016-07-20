@@ -10,5 +10,9 @@
   {
     "outputFile": "app/a11yScroll/a11yScroll.css",
     "inputFile": "app/a11yScroll/a11yScroll.less"
+  },
+  {
+    "outputFile": "app/a11yBadges/a11yBadges.css",
+    "inputFile": "app/a11yBadges/a11yBadges.less"
   }
 ]

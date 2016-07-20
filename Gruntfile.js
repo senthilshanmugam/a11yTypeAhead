@@ -38,7 +38,7 @@ module.exports = function (grunt) {
                 tasks: ['wiredep']
             },
             js: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', '<%= yeoman.app %>/a11y*/{,*/}*.js'],
                 tasks: ['newer:jshint:all', 'newer:jscs:all'],
                 options: {
                     livereload: '<%= connect.options.livereload %>'
@@ -49,7 +49,8 @@ module.exports = function (grunt) {
                 tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
             },
             styles: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+                files: ['<%= yeoman.app %>/styles/{,*/}*.css',
+                        '<%= yeoman.app %>/a11y*/{,*/}*.css'],
                 tasks: ['newer:copy:styles', 'postcss']
             },
             gruntfile: {
@@ -128,8 +129,7 @@ module.exports = function (grunt) {
                 src: [
                   'Gruntfile.js',
                   '<%= yeoman.app %>/scripts/{,*/}*.js',
-                  '<%= yeoman.app %>/a11yCommon/{,*/}*.js',
-                  '<%= yeoman.app %>/a11yTypeAhead/{,*/}*.js'
+                  '<%= yeoman.app %>/a11y*/{,*/}*.js'
                 ]
             },
             test: {
@@ -149,7 +149,8 @@ module.exports = function (grunt) {
             all: {
                 src: [
                   'Gruntfile.js',
-                  '<%= yeoman.app %>/scripts/{,*/}*.js'
+                  '<%= yeoman.app %>/scripts/{,*/}*.js',
+                  '<%= yeoman.app %>/a11y*/{,*/}*.js'
                 ]
             },
             test: {
@@ -230,7 +231,7 @@ module.exports = function (grunt) {
                 src: [
                   '<%= yeoman.dist %>/scripts/{,*/}*.js',
                   '<%= yeoman.dist %>/styles/{,*/}*.css',
-                  '<%= yeoman.dist %>/a11yTypeAhead/{,*/}*.css',
+                  '<%= yeoman.dist %>/a11y*/{,*/}*.css',
                   '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
                   '<%= yeoman.dist %>/styles/fonts/*'
                 ]
@@ -259,8 +260,9 @@ module.exports = function (grunt) {
         // Performs rewrites based on filerev and the useminPrepare configuration
         usemin: {
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
-            css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
-            js: ['<%= yeoman.dist %>/scripts/{,*/}*.js'],
+            css: ['<%= yeoman.dist %>/styles/{,*/}*.css','<%= yeoman.dist %>/a11y*/{,*/}*.css'],
+            js: ['<%= yeoman.dist %>/scripts/{,*/}*.js',
+            '<%= yeoman.app %>/a11y*/{,*/}*.js'],
             options: {
                 assetsDirs: [
                   '<%= yeoman.dist %>',
@@ -339,15 +341,25 @@ module.exports = function (grunt) {
         },
 
         ngtemplates: {
-            dist: {
+            a11yComponentsApp:
+            {
                 options: {
-                    module: 'a11yComponentsApp',
                     htmlmin: '<%= htmlmin.dist.options %>',
                     usemin: 'scripts/scripts.js'
                 },
                 cwd: '<%= yeoman.app %>',
                 src: 'views/{,*/}*.html',
-                dest: '.tmp/templateCache.js'
+                dest: '.tmp/tc-a11yComponentsApp.js'
+            },
+            a11yModule:
+            {
+                options: {
+                    htmlmin: '<%= htmlmin.dist.options %>',
+                    usemin: 'scripts/a11y.js'
+                },
+                cwd: '<%= yeoman.app %>',
+                src: 'a11y*/{,*/}*.html',
+                dest: '.tmp/tc-a11yModule.js'
             }
         },
 
@@ -405,9 +417,9 @@ module.exports = function (grunt) {
             },
             a11ystyles: {
                 expand: true,
-                cwd: '<%= yeoman.app %>/a11yTypeAhead',
+                cwd: '<%= yeoman.app %>',
                 dest: '.tmp/styles/',
-                src: '{,*/}*.css'
+                src: 'a11y*/{,*/}*.css'
             }
         },
 

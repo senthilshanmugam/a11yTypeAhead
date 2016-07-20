@@ -17,7 +17,12 @@
     <!-- build:css styles\a11y.css -->
     <link rel="stylesheet" href="a11yCommon/a11yCommon.css">
     <link rel="stylesheet" href="a11yTypeAhead/a11yTypeAhead.css">
-    <link href="a11yScroll/a11yScroll.css" rel="stylesheet" />
+    <link rel="stylesheet" href="a11yScroll/a11yScroll.css" />
+    <link rel="stylesheet" href="a11ySlickGrid/slick.grid.css" />
+    <link rel="stylesheet" href="a11ySlickGrid/jquery-ui-1.11.3.custom.css" />
+    <link rel="stylesheet" href="a11ySlickGrid/slick.headermenu.css" />
+    <link rel="stylesheet" href="a11ySlickGrid/examples.css" />
+    <link rel="stylesheet" href="a11ySlickGrid/a11ySlickGrid.css" />
     <!-- endbuild -->
 </head>
 <body ng-app="a11yComponentsApp">
@@ -46,6 +51,7 @@
                         <li ng-class="getClass('/')"><a ng-href="#/">Home</a></li>
                         <li ng-class="getClass('/a11yTypeAhead')"><a ng-href="#/a11yTypeAhead">Type Ahead</a></li>
                         <li ng-class="getClass('/a11yScroll')"><a ng-href="#/a11yScroll">Scroll</a></li>
+                        <li ng-class="getClass('/a11ySlickGrid')"><a ng-href="#/a11ySlickGrid">Slick Grid</a></li>
                         <li ng-class="getClass('/about')"><a ng-href="#/about">About</a></li>
                         <li><a ng-href="#/">Contact</a></li>
                     </ul>
@@ -105,7 +111,15 @@
     <script src="a11yTypeAhead/a11yTypeAhead.js"></script>
     <script src="a11yScroll/a11yScrollController.js"></script>
     <script src="a11yScroll/a11yScroll.js"></script>
+    <script src="a11ySlickGrid/jquery-ui-1.11.3.js"></script>
+    <script src="a11ySlickGrid/jquery.event.drag-2.2.js"></script>
+    <script src="a11ySlickGrid/a11ySlickGridController.js"></script>
+    <script src="a11ySlickGrid/slick.core.js"></script>
+    <script src="a11ySlickGrid/slick.editors.js"></script>
+    <script src="a11ySlickGrid/slick.grid.js"></script>
+    <script src="a11ySlickGrid/slick.headermenu.js"></script>
+    <script src="a11ySlickGrid/a11ySlickGrid.js"></script>
     <!-- endbuild -->
-  
+
 </body>
 </html>

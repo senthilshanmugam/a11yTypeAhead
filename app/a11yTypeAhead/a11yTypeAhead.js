@@ -72,7 +72,7 @@ angular.module('a11yModule').directive('a11yTypeAhead', ['$timeout', '$sce', '$c
                         }
                         else {
                             $scope.selectOption(currentItem, currentItem[0] !== $scope.taSelected[0]);
-                            $scope.hideOption();
+                            $scope.clearOption();
                             $timeout(function () { $scope.taEdit.focus(); }, 5);
                         }
                         $scope.taEdit.select();

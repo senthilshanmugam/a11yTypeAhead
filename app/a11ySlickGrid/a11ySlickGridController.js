@@ -115,12 +115,12 @@
                 menu: {
                     items: [
                       {
-                          iconImage: "images/sort-asc.819d1d78.gif",
+                          iconImage: "images/sort-asc.gif",
                           title: "Sort Ascending",
                           command: "sort-asc"
                       },
                       {
-                          iconImage: "images/sort-desc.a4cae4c5.gif",
+                          iconImage: "images/sort-desc.gif",
                           title: "Sort Descending",
                           command: "sort-desc"
                       },

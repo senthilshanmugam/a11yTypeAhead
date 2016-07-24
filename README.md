@@ -1,6 +1,6 @@
 # Accessible Type Ahead
 
-Accessible Type Ahead directive.
+Angular JS Accessible Type Ahead directive.
 
 ## Demo
 See Live Demo @ <a href="http://a11ywidgetsdemo.azurewebsites.net/#/a11yTypeAhead">http://a11ywidgetsdemo.azurewebsites.net/#/a11yTypeAhead</a>

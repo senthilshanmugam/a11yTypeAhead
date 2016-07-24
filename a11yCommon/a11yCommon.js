@@ -453,31 +453,6 @@ a11yModule.factory('a11yCommon', ['$q', '$timeout', function ($q, $timeout) {
             { "code": "UZ", "name": "Uzbekistan" },
             { "code": "VI", "name": "Vietnam" },
             { "code": "YE", "name": "Yemen" }
-        ],
-
-        WeekDays: [
-            { "abbr": "Sun", "fullName": "Sunday" },
-            { "abbr": "Mon", "fullName": "Monday" },
-            { "abbr": "Tue", "fullName": "Tuesday" },
-            { "abbr": "Wed", "fullName": "Wednesday" },
-            { "abbr": "Thu", "fullName": "Thrusday" },
-            { "abbr": "Fri", "fullName": "Friday" },
-            { "abbr": "Sat", "fullName": "Saturday" }
-        ],
-
-        CalenderMonths: [
-            { "abbr": "Jan", "fullName": "January" },
-            { "abbr": "Feb", "fullName": "February" },
-            { "abbr": "Mar", "fullName": "March" },
-            { "abbr": "Apr", "fullName": "April" },
-            { "abbr": "May", "fullName": "May" },
-            { "abbr": "Jun", "fullName": "June" },
-            { "abbr": "Jul", "fullName": "July" },
-            { "abbr": "Aug", "fullName": "August" },
-            { "abbr": "Sep", "fullName": "September" },
-            { "abbr": "Oct", "fullName": "October" },
-            { "abbr": "Nov", "fullName": "November" },
-            { "abbr": "Dec", "fullName": "December" }
         ]
     };
 }])

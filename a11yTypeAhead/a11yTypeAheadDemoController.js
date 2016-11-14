@@ -1,9 +1,10 @@
 ﻿angular.module('a11yModule')
-    .controller('a11yTypeAheadController', ['$scope', '$q', '$timeout', 'a11yCommon', function ($scope, $q, $timeout, a11yCommon) {
-        $scope.name = "";
+    .controller('a11yTypeAheadDemoController', ['$scope', '$q', '$timeout', 'a11yCommon', function ($scope, $q, $timeout, a11yCommon) {
+        $scope.name = {};
 
         $scope.onItemSelected = function () {
-            console.log($scope.name + " Selected")
+            console.log("Selected Item");
+            console.log($scope.name);
         };
 
         $scope.getSelectedItemText = function (itemSelected) {
